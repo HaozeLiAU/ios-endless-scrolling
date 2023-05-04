@@ -20,6 +20,7 @@
 		E7AE445E2A037ACD009A66CA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E7AE445D2A037ACD009A66CA /* GoogleService-Info.plist */; };
 		E7AE44612A037BDA009A66CA /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = E7AE44602A037BDA009A66CA /* FirebaseAnalytics */; };
 		E7AE44632A037BDA009A66CA /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E7AE44622A037BDA009A66CA /* FirebaseAnalyticsSwift */; };
+		E7AE44652A039174009A66CA /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = E7AE44642A039174009A66CA /* FirebaseFirestore */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +64,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E7AE44632A037BDA009A66CA /* FirebaseAnalyticsSwift in Frameworks */,
+				E7AE44652A039174009A66CA /* FirebaseFirestore in Frameworks */,
 				E7AE44612A037BDA009A66CA /* FirebaseAnalytics in Frameworks */,
 				E7AE445629CC4C8B009A66CA /* WebKit.framework in Frameworks */,
 			);
@@ -173,6 +175,7 @@
 			packageProductDependencies = (
 				E7AE44602A037BDA009A66CA /* FirebaseAnalytics */,
 				E7AE44622A037BDA009A66CA /* FirebaseAnalyticsSwift */,
+				E7AE44642A039174009A66CA /* FirebaseFirestore */,
 			);
 			productName = Webdatacollect;
 			productReference = E7AE442629CC4BB5009A66CA /* Webdatacollect.app */;
@@ -661,6 +664,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = E7AE445F2A037BDA009A66CA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAnalyticsSwift;
+		};
+		E7AE44642A039174009A66CA /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E7AE445F2A037BDA009A66CA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
