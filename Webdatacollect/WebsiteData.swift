@@ -4,47 +4,45 @@
 //
 //  Created by haoze li on 3/24/23.
 //
-
 import FirebaseFirestore
 
 struct Website: Identifiable {
     var id = UUID()
     var url: String
     var scrollCount: Int
-    // Added touchPoints field
-    var touchPoints: [CGPoint] = []
+    var touchEvents: [(point: CGPoint, timestamp: TimeInterval)] = []
 }
 
 class WebsiteDataManager: ObservableObject {
     @Published var websites: [Website] = []
-    
-    // Added touchPoint parameter
-    func incrementScrollCount(for websiteUrl: String, touchPoint: CGPoint) {
+
+    // Add timestamp parameter
+    func incrementScrollCount(for websiteUrl: String, touchPoint: CGPoint, timestamp: TimeInterval) {
         if let index = websites.firstIndex(where: { $0.url == websiteUrl }) {
             websites[index].scrollCount += 1
-            // Added touch point to touchPoints array
-            websites[index].touchPoints.append(touchPoint)
+            // Add touch point and timestamp to touchEvents array
+            websites[index].touchEvents.append((point: touchPoint, timestamp: timestamp))
         } else {
-            // Added touchPoint to the new Website object
-            websites.append(Website(url: websiteUrl, scrollCount: 1, touchPoints: [touchPoint]))
+            // Add touchPoint and timestamp to the new Website object
+            websites.append(Website(url: websiteUrl, scrollCount: 1, touchEvents: [(point: touchPoint, timestamp: timestamp)]))
         }
         saveDataToFirebase()
     }
-    
+
     func saveDataToFirebase() {
         let db = Firestore.firestore()
-        
+
         for website in websites {
-            // Convert touchPoints to an array of dictionaries
-            let touchPointsArray = website.touchPoints.map { ["x": $0.x, "y": $0.y] }
-            
+            // Convert touchEvents to an array of dictionaries
+            let touchEventsArray = website.touchEvents.map { ["x": $0.point.x, "y": $0.point.y, "timestamp": $0.timestamp] }
+
             let data: [String: Any] = [
                 "url": website.url,
                 "scrollCount": website.scrollCount,
-                // Added touchPoints to data
-                "touchPoints": touchPointsArray
+                // Add touchEvents to data
+                "touchEvents": touchEventsArray
             ]
-            
+
             db.collection("websites").document(website.id.uuidString).setData(data) { error in
                 if let error = error {
                     print("Error saving data to Firestore: \(error)")
@@ -55,4 +53,5 @@ class WebsiteDataManager: ObservableObject {
         }
     }
 }
+
 
