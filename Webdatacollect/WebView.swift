@@ -43,7 +43,13 @@ struct WebView: UIViewRepresentable {
             }
         }
         func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-                parent.websiteDataManager.incrementScrollCount(for: currentUrl!)
+            // Added touch point location
+            let touchPoint = scrollView.panGestureRecognizer.location(in: scrollView)
+                        
+            // Added touchPoint as a parameter
+            parent.websiteDataManager.incrementScrollCount(for: currentUrl!, touchPoint: touchPoint)
+
+                
             
             
         }
