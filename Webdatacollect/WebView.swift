@@ -79,10 +79,10 @@ struct WebView: UIViewRepresentable {
             }
         }
         
-        // 开始收集加速度计数据
+        // Accelerometer
         func startAccelerometer() {
             if motionManager.isAccelerometerAvailable {
-                motionManager.accelerometerUpdateInterval = 0.1 // 更新频率
+                motionManager.accelerometerUpdateInterval = 0.1 // rate
                 motionManager.startAccelerometerUpdates()
             }
         }
