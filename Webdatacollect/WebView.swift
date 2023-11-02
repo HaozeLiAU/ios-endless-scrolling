@@ -11,10 +11,10 @@ import CoreMotion // 添加这一行
 struct WebView: UIViewRepresentable {
     @Binding var urlString: String
     @EnvironmentObject var websiteDataManager: WebsiteDataManager
-    var motionManager = CMMotionManager() // 添加这一行
+    var motionManager = CMMotionManager() 
 
     func makeCoordinator() -> Coordinator {
-        Coordinator(self, motionManager: motionManager) // 修改这一行
+        Coordinator(self, motionManager: motionManager) 
     }
 
     func makeUIView(context: Context) -> WKWebView {
@@ -40,14 +40,14 @@ struct WebView: UIViewRepresentable {
     class Coordinator: NSObject, WKNavigationDelegate, UIScrollViewDelegate {
         var parent: WebView
         var currentUrl: String?
-        var motionManager: CMMotionManager // 添加这一行
-        var lastContentOffset: CGPoint = .zero // 添加这一行
+        var motionManager: CMMotionManager 
+        var lastContentOffset: CGPoint = .zero 
 
-        init(_ parent: WebView, motionManager: CMMotionManager) { // 修改这一行
+        init(_ parent: WebView, motionManager: CMMotionManager) { 
             self.parent = parent
-            self.motionManager = motionManager // 添加这一行
-            super.init() // 添加这一行
-            startAccelerometer() // 添加这一行
+            self.motionManager = motionManager 
+            super.init() 
+            startAccelerometer() 
         }
 
         func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
@@ -59,7 +59,7 @@ struct WebView: UIViewRepresentable {
         }
 
         func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-            // 记录开始拖动时的内容偏移量
+            
             lastContentOffset = scrollView.contentOffset
         }
 
@@ -68,11 +68,11 @@ struct WebView: UIViewRepresentable {
             let touchPoint = scrollView.panGestureRecognizer.location(in: scrollView)
             let timestamp = Date().timeIntervalSince1970
 
-            // 计算滚动速度
+            
             let currentContentOffset = scrollView.contentOffset
             let scrollVelocity = sqrt(pow(currentContentOffset.x - lastContentOffset.x, 2) + pow(currentContentOffset.y - lastContentOffset.y, 2))
 
-            // 记录加速度
+            
             if let accelerometerData = motionManager.accelerometerData {
                 let acceleration = accelerometerData.acceleration
                 parent.websiteDataManager.incrementScrollCount(for: currentUrl!, touchPoint: touchPoint, timestamp: timestamp, scrollVelocity: scrollVelocity, acceleration: acceleration)
